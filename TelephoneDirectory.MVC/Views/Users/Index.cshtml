@@ -1,0 +1,118 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TelephoneDirectory.MVC.Models.ListUserViewRegisterModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <script src="@Url.Content("~/js/javascript.js")"></script>
+    <link href="@Url.Content("~/css/style.css")" rel="stylesheet" />
+
+    <div class="row">
+        <div class="col-lg">
+            <div class="ibox">
+                <div class="ibox-head">
+                    Kişi Listesi
+                </div>
+                <div class="ibox-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+                    else if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Adı</th>
+                            <td>Soyadı</td>
+                            <td>E-Mail</td>
+                        </tr>
+                        </thead>
+
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(x => user.Id)</td>
+                                <td>
+                                    <!-- Adı tıklanabilir yap -->
+                                    <span style="cursor: pointer; font-weight: bold;"
+                                          onclick="toggleRoles(this)">
+                                        @user.FirstName
+                                    </span>
+                                    <!-- Rolleri burada listele -->
+                                    <div class="roles-container" style="display: none; margin-top: 5px; padding-left: 10px;">
+                                        <ul style="list-style-type: none; padding-left: 0;">
+                                            @if (!string.IsNullOrEmpty(user.RolString))
+                                            {
+                                                @foreach (var rol in user.SelectedRoles)
+                                                {
+                                                    <li style="margin-bottom: 5px;">
+                                                        @rol.Name
+                                                       
+                                                        <button class="btn btn-danger btn-sm" style="display: block; width: 25%;"
+                                                                onclick="confirmUserRoleDeletion('@user.Id','@user.FirstName','@rol.Id','@rol.Name')">
+                                                            Sil
+                                                        </button>
+                                                    </li>
+                                                }
+
+
+                                                <li>
+                                                    @Html.ActionLink("Yeni Rol Ekle", "AddUserRole", new { id = user.Id },
+                                                        new { @class = "btn btn-success btn-sm", style = "display: block; width: 25%;" })
+                                                </li>
+                                                <li>
+                                                    @Html.ActionLink("Düzenle", "UpdateUser", new { id = user.Id },
+                                                        new { @class = "btn btn-warning btn-sm", style = "display: block; width: 25%;" })
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li><span>Rol bulunamadı.</span></li>
+                                                <li style="margin-bottom: 5px;">
+                                                    @Html.ActionLink("Yeni Rol Ekle", "AddUserRole", new { id = user.Id },
+                                                        new { @class = "btn btn-success btn-sm", style = "display: block; width: 25%;" })
+                                                </li>
+
+                                            }
+                                        </ul>
+                                    </div>
+
+                                </td>
+                                <td>@Html.DisplayFor(x => user.LastName)</td>
+                                <td>@Html.DisplayFor(x => user.Email)</td>
+
+
+                            </tr>
+                        }
+
+                    </table>
+                    <div class="form-group">
+                        @Html.ActionLink("Yeni Kullanıcı Ekle", "Register", new { },
+                            new { @class = "btn btn-success btn-sm", style = "display: block; width: 10%;" })
+                    </div>
+
+                    @Html.PagedListPager(Model, page => Url.Action("Index", "Users", new { page }), new PagedListRenderOptions
+                    {
+                        UlElementClasses = new[] { "pagination" },
+                        LiElementClasses = new[] { "page-item" },
+                        PageClasses = new[] { "page-link" }
+                    })
+
+                </div>
+            </div>
+        </div>
+    </div>
+</head>

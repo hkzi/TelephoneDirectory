@@ -1,0 +1,39 @@
+﻿
+@model TelephoneDirectory.MVC.Models.PersonListViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            @foreach (var person in Model.Persons)
+            {
+            <div class="ibox-head">
+                    <b>@Html.DisplayFor(x => person.Id) nolu Kişi Bilgileri</b>
+            </div>
+            <div class="ibox-body">
+                <div class="form-group">
+                    <b>Kişi İsmi:</b>
+                        @Html.DisplayFor(x => person.Name)
+                </div>
+                <div class="form-group">
+                    <b>Kişi Soyismi:</b>
+                        @Html.DisplayFor(x => person.SurName)
+                </div>
+                <div class="form-group">
+                    <b>Kişi Telefonu:</b>
+                        @Html.DisplayFor(x => person.PhoneNumber)
+                </div>
+                    <div class="form-group">
+                    @Html.ActionLink("Kişi Listesi", "Index", new {}, new { @class = "btn btn-info btn-sm" })
+                    </div> 
+                    </div>
+            }
+            </div>
+    
+    </div>
+</div>
+
+

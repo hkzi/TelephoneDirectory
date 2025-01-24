@@ -1,0 +1,27 @@
+﻿.roles-container {
+    margin-top: 5px;
+    padding-left: 10px;
+    display: none;
+}
+.dropdown-container {
+    display: none;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown-btn {
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.dropdown-btn:hover {
+    background-color: #0056b3;
+}

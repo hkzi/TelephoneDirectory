@@ -1,0 +1,158 @@
+﻿@using TelephoneDirectory.Core.Entities.Concrete
+@model TelephoneDirectory.MVC.Models.UserListViewRegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Telefon Rehberi Otomasyonu | Register</title>
+    <!-- GLOBAL MAINLY STYLES-->
+    <link href="~/AdminDashboard/admincast-master/html/dist/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/AdminDashboard/admincast-master/html/dist/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/AdminDashboard/admincast-master/html/dist/assets/vendors/themify-icons/css/themify-icons.css" rel="stylesheet" />
+    <!-- THEME STYLES-->
+    <link href="~/AdminDashboard/admincast-master/html/dist/assets/css/main.css" rel="stylesheet" />
+    <!-- PAGE LEVEL STYLES-->
+    <link href="~/AdminDashboard/admincast-master/html/dist/assets/css/pages/auth-light.css" rel="stylesheet" />
+</head>
+
+<body class="bg-silver-300">
+    <div class="content">
+        <div class="brand">
+            <a class="link" href="/Persons/Index">Telefon Rehberi Otomasyonu</a>
+        </div>
+        @using (Html.BeginForm("Register", "Users", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <h2 class="login-title">Kullanıcı Kayıt İşlemleri</h2>
+
+            <div class="form-group">
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <span class="text-danger">@ViewBag.ErrorMessage</span>
+                }
+            </div>
+            <div class="form-group">
+                @Html.ValidationMessageFor(x => x.UserForRegisterDtos.FirstName, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(x => x.UserForRegisterDtos.FirstName, new { @class = "form-control", placeholder = "Ad" })
+
+            </div>
+            <div class="form-group">
+                @Html.ValidationMessageFor(x => x.UserForRegisterDtos.LastName, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(x => x.UserForRegisterDtos.LastName, new { @class = "form-control", placeholder = "Soyad" })
+            </div>
+            <div class="form-group">
+                @Html.ValidationMessageFor(x => x.UserForRegisterDtos.Email, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(x => x.UserForRegisterDtos.Email, new { @class = "form-control", placeholder = "Email" })
+            </div>
+            <div class="form-group">
+                @Html.ValidationMessageFor(x => x.UserForRegisterDtos.Password, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(x => x.UserForRegisterDtos.Password, new { @class = "form-control", placeholder = "Şifre", type = "password" })
+            </div>
+            <div class="form-group">
+                @Html.TextBox("sifreTekrarı", null, new { id = "sifreTekrarı", @class = "form-control", placeholder = "Şifre Tekrar", type = "password" })
+            </div>
+            <div class="form-group">
+                @{
+                    string? passwordError = ViewBag.PasswordError as string;
+                    <span class="text-danger">@passwordError</span>
+                }
+            </div>
+            <div class="form-group text-left">
+                <label class="ui-checkbox ui-checkbox-info">
+                    @Html.CheckBox("kabul", new { @class = "form-control" })
+                    <span class="input-span"></span>Şartları kabul ediyorum.
+                </label>
+            </div>
+            <div class="form-group">
+                @{
+                    string? acceptError = ViewBag.AcceptError as string;
+                }
+
+                @if (!string.IsNullOrEmpty(acceptError))
+                {
+                    <span class="text-danger">@acceptError</span>
+                }
+            </div>
+           <div class="form-group">
+                <button class="btn btn-info btn-block" type="submit">Kaydol</button>
+            </div>
+            <div class="social-auth-hr">
+                <span>veya Giriş Yap</span>
+            </div>
+            <div class="text-center social-auth m-b-20">
+                <a class="btn btn-social-icon btn-twitter m-r-5" href="javascript:;"><i class="fa fa-twitter"></i></a>
+                <a class="btn btn-social-icon btn-facebook m-r-5" href="javascript:;"><i class="fa fa-facebook"></i></a>
+                <a class="btn btn-social-icon btn-google m-r-5" href="javascript:;"><i class="fa fa-google-plus"></i></a>
+                <a class="btn btn-social-icon btn-linkedin m-r-5" href="javascript:;"><i class="fa fa-linkedin"></i></a>
+                <a class="btn btn-social-icon btn-vk" href="javascript:;"><i class="fa fa-vk"></i></a>
+            </div>
+            <div class="text-center">
+                Üye misiniz?
+                <a class="color-blue" href="/Users/Login">Giriş Yap</a>
+            </div>
+        }
+    </div>
+    <!-- BEGIN PAGA BACKDROPS-->
+    <div class="sidenav-backdrop backdrop"></div>
+    <div class="preloader-backdrop">
+        <div class="page-preloader">Yükleniyor</div>
+    </div>
+    <!-- END PAGA BACKDROPS-->
+    <!-- CORE PLUGINS -->
+    <script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/popper.js/dist/umd/popper.min.js" type="text/javascript"></script>
+    <script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- PAGE LEVEL PLUGINS -->
+    <script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
+    <!-- CORE SCRIPTS-->
+    <script src="~/AdminDashboard/admincast-master/html/dist/assets/js/app.js" type="text/javascript"></script>
+    <!-- PAGE LEVEL SCRIPTS-->
+    <script type="text/javascript">
+        $(function () {
+            $('#register-form').validate({
+                errorClass: "help-block",
+                rules: {
+                    UserForRegisterDtos_FirstName: {
+                        required: true,
+                        minlength: 2
+                    },
+                    UserForRegisterDtos_LastName: {
+                        required: true,
+                        minlength: 2
+                    },
+                    UserForRegisterDtos_Email: {
+                        required: true,
+                        email: true
+                    },
+                    UserForRegisterDtos_Password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    sifreTekrarı: {
+                        equalTo: "#UserForRegisterDtos_Password"
+                    },
+                    kabul: {
+                        required: true
+                    }
+                },
+                highlight: function (e) {
+                    $(e).closest(".form-group").addClass("has-error")
+                },
+                unhighlight: function (e) {
+                    $(e).closest(".form-group").removeClass("has-error")
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

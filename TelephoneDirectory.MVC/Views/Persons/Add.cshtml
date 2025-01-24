@@ -1,0 +1,53 @@
+﻿@model TelephoneDirectory.Entities.Concrete.Person
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Kişi Ekleme</h2>
+        <p class="lead">Lütfen bilgileri giriniz</p>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12 order-md-1">
+            <h4 class="mb-3">Bilgiler</h4>
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            @using (Html.BeginForm("Add", "Persons", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label for="Name">@Html.DisplayNameFor(p => p.Name)</label>
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", placeholder = "Adınızı giriniz" })
+
+                </div>
+
+                <div class="form-group">
+                    <label for="SurName">@Html.DisplayNameFor(p => p.SurName)</label>
+                    @Html.TextBoxFor(x => x.SurName, new { @class = "form-control", placeholder = "Soyadınızı giriniz" })
+
+                </div>
+
+                <div class="form-group">
+                    <label for="PhoneNumber">@Html.DisplayNameFor(p => p.PhoneNumber)</label>
+                    @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", placeholder = "Telefon numaranızı giriniz" })
+
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Kaydet" class="btn btn-success" />
+                </div>
+
+            }
+        </div>
+
+    </div>
+
+</div>
+
+}

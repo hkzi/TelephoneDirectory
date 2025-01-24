@@ -1,0 +1,65 @@
+﻿@model TelephoneDirectory.Entities.DTOs.UserForRegisterDto
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Kullanıcı Ekleme</h2>
+        <p class="lead">Lütfen bilgileri giriniz</p>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12 order-md-1">
+            <h4 class="mb-3">Bilgiler</h4>
+            @using (Html.BeginForm("Add", "Users", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+                <div class="form-group">
+                    <div>
+                        @Html.DisplayNameFor(u => u.FirstName)
+                        @Html.ValidationMessageFor(u => u.FirstName, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(u => u.FirstName, new { @class = "form-control", placeholder = "Ad" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        @Html.DisplayNameFor(u => u.LastName)
+                        @Html.ValidationMessageFor(u => u.LastName, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(u => u.LastName, new { @class = "form-control", placeholder = "Soyad" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        @Html.DisplayNameFor(u => u.Email)
+                        @Html.ValidationMessageFor(u => u.Email, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(u => u.Email, new { @class = "form-control", placeholder = "Email" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        @Html.DisplayNameFor(u => u.Password)
+                        @Html.ValidationMessageFor(u => u.Password, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(u => u.Password, new { @class = "form-control", placeholder = "Şifre", type = "password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Kaydet" class="btn btn-success" />
+                </div>
+
+
+
+            }
+        </div>
+
+    </div>
+
+</div>
+
+

@@ -1,0 +1,28 @@
+﻿@model TelephoneDirectory.MVC.Models.PersonListViewModel
+
+@{
+    ViewBag.Title = "Rehber";
+    Layout = "_Layout";
+}
+<link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+<!DOCTYPE html>
+
+<h2>Telefon Rehberi</h2>
+<html>
+<body>
+<div>
+        <div style="background-position-x: left">  @DateTime.Now</div>
+        <br/>
+    @foreach (var person in Model.Persons)
+    {
+        @person.Name
+        @person.SurName
+        @person.PhoneNumber
+
+
+    }
+        
+
+</div>
+</body>
+</html>

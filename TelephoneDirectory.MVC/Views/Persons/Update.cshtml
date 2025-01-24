@@ -1,0 +1,53 @@
+﻿@model TelephoneDirectory.MVC.Models.PersonListViewModel
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Kişi Düzenle</h2>
+        <p class="lead">Lütfen bilgileri düzenleyiniz</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 order-md-1">
+            <h4 class="mb-3">Bilgiler</h4>
+
+            @using (Html.BeginForm("Update", "Persons", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                @if (Model?.Persons != null && Model.Persons.Count > 0)
+                {
+                    @for (int i = 0; i < Model.Persons.Count; i++)
+                    {
+                        <div>
+                            @Html.HiddenFor(m => m.Persons[i].Id)
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Persons[i].Name, "Ad")
+                                @Html.TextBoxFor(m => m.Persons[i].Name, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Persons[i].SurName, "Soyad")
+                                @Html.TextBoxFor(m => m.Persons[i].SurName, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Persons[i].PhoneNumber, "Telefon Numarası")
+                                @Html.TextBoxFor(m => m.Persons[i].PhoneNumber, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Kişi bulunamadı.</p>
+                }
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Güncelle</button>
+                <a href="@Url.Action("Index", "Persons")" class="btn btn-secondary btn-sm btn-block">Vazgeç</a>
+
+            }
+        </div>
+    </div>
+</div>

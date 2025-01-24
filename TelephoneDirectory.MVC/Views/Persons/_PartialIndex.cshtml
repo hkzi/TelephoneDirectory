@@ -1,0 +1,119 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TelephoneDirectory.MVC.Models.PersonListViewModel>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Girişi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .admin-button {
+            position: fixed; /* Sabitler */
+            top: 75px; /* Sayfanın üstünden 10px */
+            right: 10px; /* Sayfanın sağından 10px */
+            z-index: 9999; /* Diğer elementlerin üstünde */
+            background-color: #6c757d;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+
+        .admin-button:hover {
+            background-color: #5a6268; /* Hover efekti */
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            <div class="ibox-head">
+                Kişi Listesi
+            </div>
+            <div class="ibox-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <td>İsim</td>
+                        <td>Soyisim</td>
+                        <td>Telefon Numarası</td>
+                        @if (User.IsInRole("Moderator"))
+                        {
+                            <td>Düzenle</td>
+                            <td>Bilgi</td>
+                            <td>Silme</td>
+                        }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var person in Model)
+                    {
+                        <tr>
+                            <th>@Html.DisplayFor(x => person.Id)</th>
+                            <td>@Html.DisplayFor(x => person.Name)</td>
+                            <td>@Html.DisplayFor(x => person.SurName)</td>
+                            <td>@Html.DisplayFor(x => person.PhoneNumber)</td>
+                            @if (User.IsInRole("Moderator"))
+                            {
+                                <td>
+                                    @Html.ActionLink("Düzenle", "Update", new { id = person.Id }, new { @class = "btn btn-warning  btn-sm" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Bilgi", "Detail", new { id = person.Id }, new { @class = "btn btn-info btn-sm" })
+                                </td>
+                                <td style="margin-bottom: 5px;">
+                                    <button class="btn btn-danger btn-sm" style="display: block; width: 25%;"
+                                            onclick="confirmDeletion('@person.Id', '@person.Name')">
+                                        Sil
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                    <!-- Yönetici Girişi Butonu -->
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+                        <a href="/Users/Login" class="admin-button">Yönetici Girişi</a>
+                    }
+                    </tbody>
+                </table>
+
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Persons", new { page }), new PagedListRenderOptions
+                {
+                    UlElementClasses = new[] { "pagination" },
+                    LiElementClasses = new[] { "page-item" },
+                    PageClasses = new[] { "page-link" }
+                })
+                @if (User.IsInRole("Moderator"))
+                {
+                    <div class="form-group">
+                        @Html.ActionLink("Yeni Kişi Ekle", "Add", new { }, new { @class = "btn btn-success btn-sm" })
+                    </div>
+                }
+                else
+                {
+                    <div style="display: none;">
+                        @Html.ActionLink("Yeni Kişi Ekle", "Add", new { }, new { @class = "btn btn-success btn-sm" })
+                    </div>
+                }
+
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
